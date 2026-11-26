@@ -38,7 +38,7 @@ public class CompilationMapper {
     public Compilation toEntity(NewCompilationDto dto,
                                 Set<Event> events) {
         Compilation compilation = new Compilation();
-        compilation.setTitle(dto.title().trim());
+        compilation.setTitle(dto.title());
         compilation.setPinned(dto.pinned());
         compilation.setEvents(events);
         return compilation;

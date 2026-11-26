@@ -1,6 +1,7 @@
 package ru.practicum.main.client;
 
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,13 +12,14 @@ import ru.practicum.stats.dto.ViewStats;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static ru.practicum.main.constants.DtoConstants.DATE_TIME_PATTERN;
 
 @FeignClient(name = "stats-server")
 public interface StatsClient {
 
     @GetMapping("/stats")
-    List<ViewStats> getStats(@RequestParam LocalDateTime start,
-                             @RequestParam LocalDateTime end,
+    List<ViewStats> getStats(@RequestParam @DateTimeFormat(pattern = DATE_TIME_PATTERN) LocalDateTime start,
+                             @RequestParam @DateTimeFormat(pattern = DATE_TIME_PATTERN) LocalDateTime end,
                              @RequestParam List<String> uris,
                              @RequestParam Boolean unique);
 
