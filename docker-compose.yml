@@ -1,5 +1,4 @@
 services:
-  # Служба обнаружения: единственный сервис с заранее известным адресом
   discovery-server:
     build: infra/discovery-server
     container_name: discovery-server
@@ -13,12 +12,12 @@ services:
       timeout: 5s
       retries: 30
 
-  # Сервер конфигурации: случайный порт, адрес клиенты получают из Eureka
   config-server:
     build: infra/config-server
     container_name: config-server
     environment:
       EUREKA_URI: http://discovery-server:8761/eureka/
+      SPRING_PROFILES_ACTIVE: native
     depends_on:
       discovery-server:
         condition: service_healthy
@@ -38,7 +37,6 @@ services:
       timeout: 5s
       retries: 10
 
-  # Сервис статистики: случайный порт, настройки из config-server
   stats-server:
     build: stats/stats-server
     container_name: stats-server

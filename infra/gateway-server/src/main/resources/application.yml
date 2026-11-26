@@ -15,10 +15,10 @@ spring:
         multiplier: 1.5
         max-attempts: 20
 
-  eureka:
-    client:
-      service-url:
-        defaultZone: ${EUREKA_URI:http://localhost:8761/eureka/}
-    instance:
-      prefer-ip-address: true
-      instance-id: ${spring.application.name}:${random.value}
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka/}
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${random.value}

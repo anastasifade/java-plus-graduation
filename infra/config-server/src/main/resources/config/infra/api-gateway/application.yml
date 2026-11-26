@@ -93,6 +93,10 @@ spring:
           predicates:
             - Path=/events/**,/users/**,/compilations/**,categories/**
 
+eureka:
+  client:
+    registry-fetch-interval-seconds: 5
+
 management:
   endpoints:
     web:

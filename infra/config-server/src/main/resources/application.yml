@@ -8,10 +8,10 @@ spring:
       server:
         native:
           search-locations:
-            - file:./infra/config-repo
-            - file:./infra/config-repo/core
-            - file:./infra/config-repo/stats
-            - file:./infra/config-repo/infra
+            - classpath:config/
+            - classpath:config/core/{application}
+            - classpath:config/stats/{application}
+            - classpath:config/infra/{application}
 
 eureka:
   client:
