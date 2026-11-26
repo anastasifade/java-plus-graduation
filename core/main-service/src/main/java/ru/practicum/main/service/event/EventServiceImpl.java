@@ -104,7 +104,7 @@ public class EventServiceImpl implements EventService {
             throw new BadRequestException("Event date must be at least 2 hours from now");
         }
 
-        Category category = getCategoryById(request.category());
+        Category category = request.category() == null ? null : getCategoryById(request.category());
 
         EventMapper.updateEntity(request, event, category);
 
@@ -127,8 +127,8 @@ public class EventServiceImpl implements EventService {
         log.debug("Updating event id={}, access level: admin.", eventId);
 
         Event event = getEventById(eventId);
-        Category category = getCategoryById(request.category());
 
+        Category category = request.category() == null ? null : getCategoryById(request.category());
         if (request.eventDate() != null &&
                 request.eventDate().isBefore(LocalDateTime.now().plusHours(1))) {
             throw new BadRequestException("Event date can be updated no later than 1 hour in advance.");
