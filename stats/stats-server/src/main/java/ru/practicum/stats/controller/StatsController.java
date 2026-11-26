@@ -39,6 +39,9 @@ public class StatsController {
 
             @RequestParam(defaultValue = "false")
             boolean unique) {
+        if (start.isAfter(end)) {
+            throw new IllegalArgumentException("Start date must be before end date.");
+        }
         StatsRequest request = new StatsRequest(start, end, uris, unique);
         return statsService.getStats(request);
     }
