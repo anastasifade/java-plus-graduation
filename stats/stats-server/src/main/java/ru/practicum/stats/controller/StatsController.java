@@ -1,15 +1,18 @@
 package ru.practicum.stats.controller;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.PastOrPresent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import ru.practicum.common.logging.Loggable;
 import ru.practicum.stats.dto.EndpointHit;
 import ru.practicum.stats.dto.StatsRequest;
 import ru.practicum.stats.dto.ViewStats;
+import ru.practicum.stats.exception.InvalidRequestParams;
 import ru.practicum.stats.service.StatsService;
-import ru.practicum.common.logging.Loggable;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -40,7 +43,7 @@ public class StatsController {
             @RequestParam(defaultValue = "false")
             boolean unique) {
         if (start.isAfter(end)) {
-            throw new IllegalArgumentException("Start date must be before end date.");
+            throw new InvalidRequestParams("Start date must be before end date.");
         }
         StatsRequest request = new StatsRequest(start, end, uris, unique);
         return statsService.getStats(request);

@@ -66,7 +66,7 @@ public class UserServiceImpl implements UserService {
 
         if (!repository.existsById(id)) {
             log.warn("main-service - UserServiceImpl: User [id={}] not found.", id);
-            throw new NotFoundException(String.format("User [id=%d] nout found.", id));
+            throw new NotFoundException(String.format("User [id=%d] not found.", id));
         }
 
         repository.deleteById(id);

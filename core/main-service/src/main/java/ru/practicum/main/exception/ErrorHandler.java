@@ -16,14 +16,14 @@ import java.util.stream.Collectors;
 @RestControllerAdvice
 public class ErrorHandler {
 
-    @ExceptionHandler(NotFoundException.class)
+    @ExceptionHandler
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ApiError handleNotFound(NotFoundException e) {
         log.warn("Not found: {}", e.getMessage());
         return new ApiError(List.of(e.getStackTrace()), e.getMessage(), "Object not found", HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(ConflictException.class)
+    @ExceptionHandler
     @ResponseStatus(HttpStatus.CONFLICT)
     public ApiError handleConflict(ConflictException e) {
         log.warn("Conflict: {}", e.getMessage());
@@ -31,14 +31,14 @@ public class ErrorHandler {
 
     }
 
-    @ExceptionHandler(BadRequestException.class)
+    @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ApiError handleBadRequest(BadRequestException e) {
         log.warn("Bad request: {}", e.getMessage());
         return new ApiError(List.of(e.getStackTrace()), e.getMessage(), "Bad request", HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ApiError handleValidation(MethodArgumentNotValidException e) {
         log.warn("Validation error: {}", e.getMessage());
@@ -49,7 +49,7 @@ public class ErrorHandler {
                 "Invalid request data", HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(MissingServletRequestParameterException.class)
+    @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ApiError handle(MissingServletRequestParameterException e) {
         log.warn("Missing required param: {}", e.getMessage());
@@ -57,7 +57,7 @@ public class ErrorHandler {
                 "missing required request param", HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(ForbiddenException.class)
+    @ExceptionHandler
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public ApiError handleAuthFailure(ForbiddenException e) {
         log.warn("Authorization failed: {}.", e.getMessage());
@@ -65,9 +65,9 @@ public class ErrorHandler {
                 "Authorization failure", HttpStatus.UNAUTHORIZED);
     }
 
-    @ExceptionHandler(Exception.class)
+    @ExceptionHandler
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ApiError handleGeneral(Exception e) {
+    public ApiError handleGeneral(Throwable e) {
         log.error("Unexpected error", e);
         return new ApiError(List.of(e.getStackTrace()), e.getMessage(),
                 "Internal server error", HttpStatus.INTERNAL_SERVER_ERROR);

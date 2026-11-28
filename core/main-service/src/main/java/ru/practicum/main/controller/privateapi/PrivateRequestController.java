@@ -41,14 +41,15 @@ public class PrivateRequestController {
 
     @GetMapping("/events/{eventId}/requests")
     public List<ParticipationRequestDto> getEventRequests(@PathVariable Long userId,
-                              @PathVariable Long eventId) {
+                                                          @PathVariable Long eventId) {
         return requestService.getEventRequests(userId, eventId);
     }
 
     @PatchMapping("/events/{eventId}/requests")
     public EventRequestStatusUpdateResult changeRequestStatus(@PathVariable Long userId,
                                                               @PathVariable Long eventId,
-                                                              @Valid @RequestBody EventRequestStatusUpdateRequest statusUpdateResult) {
+                                                              @Valid @RequestBody
+                                                              EventRequestStatusUpdateRequest statusUpdateResult) {
         return requestService.changeRequestStatus(userId, eventId, statusUpdateResult);
     }
 

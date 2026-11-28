@@ -1,5 +1,9 @@
 package ru.practicum.main.controller.publicapi;
 
+import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -54,20 +58,29 @@ public class SubscriptionController {
 
     @GetMapping("/subscribers")
     public List<SubscriptionDto> getSubscribers(@PathVariable(name = "userId") Long userId,
-                                              @RequestHeader(X_USER_ID) Long requesterId) {
+                                                @RequestHeader(X_USER_ID) Long requesterId) {
         authorize(requesterId, userId);
         return subscriptionService.getSubscribers(userId);
     }
 
     @GetMapping("/subscriptions/events")
     public List<EventShortDto> getEventsFromSubscriptions(@PathVariable(name = "userId") Long userId,
+
                                                           @RequestHeader(X_USER_ID) Long requesterId,
+
                                                           @RequestParam(required = false)
-                                                          @DateTimeFormat(pattern = DATE_TIME_PATTERN) LocalDateTime start,
+                                                          @DateTimeFormat(pattern = DATE_TIME_PATTERN)
+                                                          LocalDateTime start,
+
                                                           @RequestParam(required = false)
-                                                          @DateTimeFormat(pattern = DATE_TIME_PATTERN) LocalDateTime end,
-                                                          @RequestParam(defaultValue = "0") Integer from,
-                                                          @RequestParam(defaultValue = "10") Integer size
+                                                          @DateTimeFormat(pattern = DATE_TIME_PATTERN)
+                                                          LocalDateTime end,
+
+                                                          @RequestParam(defaultValue = "0")
+                                                          @PositiveOrZero Integer from,
+
+                                                          @RequestParam(defaultValue = "10")
+                                                          @Positive Integer size
     ) {
 
         authorize(requesterId, userId);

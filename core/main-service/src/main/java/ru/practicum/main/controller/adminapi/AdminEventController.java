@@ -1,6 +1,8 @@
 package ru.practicum.main.controller.adminapi;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.RequiredArgsConstructor;
@@ -32,10 +34,15 @@ public class AdminEventController {
     public List<EventFullDto> getEvents(@RequestParam(required = false) List<Long> users,
                                         @RequestParam(required = false) List<EventState> states,
                                         @RequestParam(required = false) List<Long> categories,
+
                                         @RequestParam(required = false)
-                                        @DateTimeFormat(pattern = DATE_TIME_PATTERN) LocalDateTime rangeStart,
+                                        @DateTimeFormat(pattern = DATE_TIME_PATTERN)
+                                        LocalDateTime rangeStart,
+
                                         @RequestParam(required = false)
-                                        @DateTimeFormat(pattern = DATE_TIME_PATTERN) LocalDateTime rangeEnd,
+                                        @DateTimeFormat(pattern = DATE_TIME_PATTERN)
+                                        LocalDateTime rangeEnd,
+
                                         @RequestParam(defaultValue = "0") @PositiveOrZero Integer from,
                                         @RequestParam(defaultValue = "10") @Positive Integer size) {
 
