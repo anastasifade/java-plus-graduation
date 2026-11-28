@@ -1,0 +1,32 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: main-service-admin
+          uri: lb://main-service
+          predicates:
+            - Path=/admin/**
+
+        - id: main-service-private
+          uri: lb://main-service
+          predicates:
+            - Path=/users/**
+
+        - id: main-service-public
+          uri: lb://main-service
+          predicates:
+            - Path=/events/**,/compilations/**,/categories/**
+
+
+eureka:
+  client:
+    registry-fetch-interval-seconds: 5
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
+server:
+  port: 8080
